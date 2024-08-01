@@ -13,24 +13,21 @@ public class TitleManager {
 
     private final PlayerTitlesPlugin plugin;
     private final Map<String, Title> titles = new HashMap<>();
-    private final FileManager fileManager;
 
     public TitleManager(PlayerTitlesPlugin plugin) {
         this.plugin = plugin;
-        this.fileManager = plugin.getFileManager();
-        fileManager.loadTitlesFromFolder();
     }
 
     public void saveTitlesToFolder() {
         for (Title title : titles.values()) {
-            fileManager.saveTitleToFolder(title);
+            plugin.getFileManager().saveTitleToFolder(title);
         }
     }
 
     public void createTitle(String key, String displayName, String tagContents, String permission, NamespacedKey titleKey, NamespacedKey titleContentsKey, String... lore) {
         Title title = new Title(key, displayName, tagContents, permission, titleKey, titleContentsKey, lore);
         this.addTitle(key, title);
-        fileManager.saveTitleToFolder(title);
+        plugin.getFileManager().saveTitleToFolder(title);
         plugin.getTitlesGUI().updateTitlesList();
     }
 
@@ -39,6 +36,7 @@ public class TitleManager {
             return;
         }
         this.titles.put(titleKey, title);
+        plugin.getTitlesGUI().updateTitlesList();
     }
 
     public void removeTitle(String titleKey) {

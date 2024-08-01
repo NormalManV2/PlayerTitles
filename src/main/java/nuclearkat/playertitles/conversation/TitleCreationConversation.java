@@ -1,6 +1,7 @@
 package nuclearkat.playertitles.conversation;
 
 import nuclearkat.playertitles.PlayerTitlesPlugin;
+import nuclearkat.playertitles.util.ColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.conversations.ConversationContext;
@@ -24,7 +25,7 @@ public class TitleCreationConversation extends StringPrompt {
         this.plugin = plugin;
         this.key = key;
         this.displayName = displayName;
-        this.tagContents = tagContents;
+        this.tagContents = ColorUtil.convertLegacyColorCodes(tagContents);
         this.permission = permission;
     }
 
@@ -49,7 +50,9 @@ public class TitleCreationConversation extends StringPrompt {
             if (lore == null) {
                 lore = new ArrayList<>();
             }
-            lore.add(input);
+            String convertedInput = ColorUtil.convertLegacyColorCodes(input);
+            System.out.println("Lore input after conversion: " + convertedInput);
+            lore.add(convertedInput);
             context.setSessionData("lore", lore);
             return this;
         }

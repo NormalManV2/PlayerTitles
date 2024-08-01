@@ -33,7 +33,7 @@ public class TextDisplayHandler {
         Vector3f scale = new Vector3f(0.75f, 0.75f, 0.75f);
         Transformation transformation = new Transformation(offset, rotation, scale, rotation);
 
-        textDisplay.setText(ColorUtil.convertLegacyColorCodes(titleContents));
+        textDisplay.setText(titleContents);
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setBackgroundColor(Color.fromARGB(0x80333333));
         textDisplay.setCustomNameVisible(false);

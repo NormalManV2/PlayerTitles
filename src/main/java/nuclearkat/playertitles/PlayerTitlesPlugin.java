@@ -15,24 +15,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class PlayerTitlesPlugin extends JavaPlugin {
 
     private FileManager fileManager;
-    private TextDisplayHandler textDisplayHandler;
     private TitleManager titleManager;
     private TitlesGUI titlesGUI;
+    private TextDisplayHandler textDisplayHandler;
     private final NamespacedKey titleContentsKey = new NamespacedKey(this, "titleContents");
     private final NamespacedKey titleKey = new NamespacedKey(this, "title");
 
     @Override
     public void onEnable() {
         initComponents();
+        fileManager.loadTitlesFromFolder();
         initCommands();
         initListeners();
     }
 
-    private void initComponents() {
+    private void initComponents(){
         this.fileManager = new FileManager(this);
-        this.textDisplayHandler = new TextDisplayHandler();
         this.titleManager = new TitleManager(this);
         this.titlesGUI = new TitlesGUI(this);
+        this.textDisplayHandler = new TextDisplayHandler();
     }
 
     private void initCommands() {
@@ -53,18 +54,34 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     }
 
     public TextDisplayHandler getTextDisplayHandler() {
+        if (textDisplayHandler == null){
+            textDisplayHandler = new TextDisplayHandler();
+        }
+
         return textDisplayHandler;
     }
 
     public TitleManager getTitleManager() {
+        if (titleManager == null){
+            titleManager = new TitleManager(this);
+        }
+
         return titleManager;
     }
 
     public TitlesGUI getTitlesGUI() {
+        if (titlesGUI == null){
+            titlesGUI = new TitlesGUI(this);
+        }
+
         return titlesGUI;
     }
 
     public FileManager getFileManager() {
+        if (fileManager == null){
+            fileManager = new FileManager(this);
+        }
+
         return fileManager;
     }
 
