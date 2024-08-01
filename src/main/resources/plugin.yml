@@ -1,0 +1,4 @@
+name: PlayerTitles
+version: '${project.version}'
+main: nuclearkat.playertitles.PlayerTitles
+api-version: '1.21'
