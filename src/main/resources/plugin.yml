@@ -10,3 +10,6 @@ commands:
   disableTitle:
 
   savetitles:
+
+depend:
+  - [PlaceholderAPI]

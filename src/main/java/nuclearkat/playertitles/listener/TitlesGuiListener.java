@@ -50,7 +50,11 @@ public class TitlesGuiListener implements Listener {
             int currentPage = getPageIndex(event.getView().getTitle());
             plugin.getTitlesGUI().openNameTagGUI(player, currentPage - 1);
 
-        } else {
+        } else if ("Click to Toggle Title".equalsIgnoreCase(clickedItemName)) {
+            plugin.getTextDisplayHandler().removeTextDisplays(player.getUniqueId());
+            player.closeInventory();
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have disabled your title!"));
+        }   else {
             PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
             String titleKey = container.get(plugin.getTitleKey(), PersistentDataType.STRING);

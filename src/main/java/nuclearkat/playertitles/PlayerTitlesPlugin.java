@@ -6,8 +6,10 @@ import nuclearkat.playertitles.command.SaveTitlesCommand;
 import nuclearkat.playertitles.command.TitleCreationCommand;
 import nuclearkat.playertitles.display.TextDisplayHandler;
 import nuclearkat.playertitles.gui.TitlesGUI;
+import nuclearkat.playertitles.listener.PlayerKickListener;
 import nuclearkat.playertitles.listener.PlayerQuitListener;
 import nuclearkat.playertitles.listener.TitlesGuiListener;
+import nuclearkat.playertitles.listener.WorldChangeListener;
 import nuclearkat.playertitles.title.TitleManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,11 +48,14 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     private void initListeners() {
         getServer().getPluginManager().registerEvents(new TitlesGuiListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+        getServer().getPluginManager().registerEvents(new WorldChangeListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerKickListener(this), this);
     }
 
     @Override
     public void onDisable() {
-
+        this.textDisplayHandler.clearDisplayEntries();
+        this.textDisplayHandler.clearTitleEntries();
     }
 
     public TextDisplayHandler getTextDisplayHandler() {

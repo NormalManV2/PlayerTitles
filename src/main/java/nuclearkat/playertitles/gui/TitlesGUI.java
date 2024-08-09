@@ -17,11 +17,13 @@ import java.util.Map;
 
 public class TitlesGUI {
 
-    private static final int TITLES_PER_PAGE = 28;
+    private static final int TITLES_PER_PAGE = 27;
     private static final int INVENTORY_SIZE = 54;
     private static final int NEXT_PAGE_SLOT = 53;
     private static final int PREVIOUS_PAGE_SLOT = 45;
     private static final ItemStack BORDER_ITEM = createBorderItem();
+    private static final ItemStack BACK_BUTTON = createNavigationItem("&cPrevious Page");
+    private static final ItemStack FORWARD_BUTTON = createNavigationItem("&cNext Page");
 
     private final PlayerTitlesPlugin plugin;
     private List<Title> titles;
@@ -54,8 +56,10 @@ public class TitlesGUI {
                 page.addItem(itemStack);
             }
 
-            page.setItem(PREVIOUS_PAGE_SLOT, createNavigationItem("&cPrevious Page"));
-            page.setItem(NEXT_PAGE_SLOT, createNavigationItem("&cNext Page"));
+            page.setItem(PREVIOUS_PAGE_SLOT, BACK_BUTTON);
+            page.setItem(NEXT_PAGE_SLOT, FORWARD_BUTTON);
+
+            page.setItem(49, createToggleItem());
 
             pages.put(i, page);
         }
@@ -80,7 +84,18 @@ public class TitlesGUI {
         return borderItem;
     }
 
-    private ItemStack createNavigationItem(String name) {
+    private static ItemStack createToggleItem(){
+        ItemStack itemStack = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cClick to Toggle Title"));
+        itemStack.setItemMeta(meta);
+        return itemStack;
+    }
+
+    private static ItemStack createNavigationItem(String name) {
         ItemStack itemStack = new ItemStack(Material.ARROW);
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {

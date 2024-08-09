@@ -13,6 +13,7 @@ import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,11 +21,12 @@ import java.util.UUID;
 public class TextDisplayHandler {
 
     private final Map<UUID, TextDisplay> activeTextDisplays = new HashMap<>();
+    private final Map<UUID, Title> activeTitles = new HashMap<>();
 
     public void displayTitle(Player player, Title title) {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
-        String titleContents = ColorUtil.convertLegacyColorCodes(title.getTagContents());
+        String titleContents = ColorUtil.parsePlaceholders(player, title.getTagContents());
 
         TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class);
 
@@ -45,6 +47,7 @@ public class TextDisplayHandler {
         textDisplay.setTransformation(transformation);
 
         this.activeTextDisplays.put(player.getUniqueId(), textDisplay);
+        this.activeTitles.put(player.getUniqueId(), title);
         player.sendMessage(ChatColor.GREEN + "You have just equipped the " + ColorUtil.convertLegacyColorCodes(title.getDisplayName()) + ChatColor.GREEN + " title!");
         player.addPassenger(textDisplay);
     }
@@ -55,5 +58,47 @@ public class TextDisplayHandler {
             return;
         }
         textDisplay.remove();
+        this.activeTitles.remove(playerId);
+    }
+
+    public Map<UUID, TextDisplay> getActiveTextDisplays() {
+        return Collections.unmodifiableMap(activeTextDisplays);
+    }
+
+    public Map<UUID, Title> getActiveTitles() {
+        return Collections.unmodifiableMap(activeTitles);
+    }
+
+    public boolean hasActiveDisplay(UUID playerId){
+        return this.activeTextDisplays.containsKey(playerId);
+    }
+
+    public boolean hasActiveTitle(UUID playerId){
+        return this.activeTitles.containsKey(playerId);
+    }
+
+    public Title getActiveTitle(UUID playerId){
+        if (!this.hasActiveTitle(playerId)){
+            return null;
+        }
+        return this.activeTitles.get(playerId);
+    }
+
+    public TextDisplay getActiveDisplay(UUID playerId){
+        if (!hasActiveDisplay(playerId)){
+            return null;
+        }
+        return this.activeTextDisplays.get(playerId);
+    }
+
+    public void clearTitleEntries(){
+        this.activeTitles.clear();
+    }
+
+    public void clearDisplayEntries(){
+        for (TextDisplay display : this.activeTextDisplays.values()){
+            display.remove();
+        }
+        this.activeTextDisplays.clear();
     }
 }
