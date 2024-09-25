@@ -1,5 +1,6 @@
 package nuclearkat.playertitles;
 
+import nuclearkat.playertitles.command.DeleteTitleCommand;
 import nuclearkat.playertitles.command.DisableTitleCommand;
 import nuclearkat.playertitles.command.OpenTitlesGuiCommand;
 import nuclearkat.playertitles.command.SaveTitlesCommand;
@@ -43,6 +44,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
         getCommand("titles").setExecutor(new OpenTitlesGuiCommand(this));
         getCommand("disabletitle").setExecutor(new DisableTitleCommand(this));
         getCommand("savetitles").setExecutor(new SaveTitlesCommand(this));
+        getCommand("deleteTitle").setExecutor(new DeleteTitleCommand(this));
     }
 
     private void initListeners() {
@@ -56,6 +58,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     public void onDisable() {
         this.textDisplayHandler.clearDisplayEntries();
         this.textDisplayHandler.clearTitleEntries();
+        this.titleManager.saveTitlesToFolder();
     }
 
     public TextDisplayHandler getTextDisplayHandler() {

@@ -98,10 +98,11 @@ public class TitlesGUI {
     private static ItemStack createNavigationItem(String name) {
         ItemStack itemStack = new ItemStack(Material.ARROW);
         ItemMeta meta = itemStack.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-            itemStack.setItemMeta(meta);
+        if (meta == null) {
+            return null;
         }
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        itemStack.setItemMeta(meta);
         return itemStack;
     }
 

@@ -51,7 +51,6 @@ public class TitleCreationConversation extends StringPrompt {
                 lore = new ArrayList<>();
             }
             String convertedInput = ColorUtil.convertLegacyColorCodes(input);
-            System.out.println("Lore input after conversion: " + convertedInput);
             lore.add(convertedInput);
             context.setSessionData("lore", lore);
             return this;

@@ -1,6 +1,5 @@
 package nuclearkat.playertitles.title;
 
-import nuclearkat.playertitles.FileManager;
 import nuclearkat.playertitles.PlayerTitlesPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;

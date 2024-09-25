@@ -18,7 +18,6 @@ public class WorldChangeListener implements Listener {
         this.plugin = plugin;
     }
 
-
     @EventHandler
     public void onWorldSwitch(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
@@ -34,6 +33,5 @@ public class WorldChangeListener implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             plugin.getTextDisplayHandler().displayTitle(player, title);
         }, 20);
-
     }
 }

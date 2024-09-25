@@ -21,7 +21,7 @@ public class SaveTitlesCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("title.command.saveTitlesCommand")){
+        if (!player.hasPermission("title.command.save_titles")){
             return false;
         }
 

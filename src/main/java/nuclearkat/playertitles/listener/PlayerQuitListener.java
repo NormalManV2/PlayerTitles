@@ -20,5 +20,4 @@ public class PlayerQuitListener implements Listener {
         UUID playerId = event.getPlayer().getUniqueId();
         this.plugin.getTextDisplayHandler().removeTextDisplays(playerId);
     }
-
 }

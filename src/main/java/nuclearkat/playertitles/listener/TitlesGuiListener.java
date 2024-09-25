@@ -54,7 +54,9 @@ public class TitlesGuiListener implements Listener {
             plugin.getTextDisplayHandler().removeTextDisplays(player.getUniqueId());
             player.closeInventory();
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have disabled your title!"));
-        }   else {
+        } else if (" ".equalsIgnoreCase(clickedItemName)){
+            player.closeInventory();
+        } else {
             PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
             String titleKey = container.get(plugin.getTitleKey(), PersistentDataType.STRING);
@@ -64,7 +66,6 @@ public class TitlesGuiListener implements Listener {
                 player.sendMessage(ChatColor.DARK_RED + "Title not found: THIS IS AN ERROR, PLEASE REPORT! <TitlesListener> ");
                 return;
             }
-
             handleTitleSelection(player, title);
         }
     }

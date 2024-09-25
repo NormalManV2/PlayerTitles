@@ -31,7 +31,7 @@ public class TitleCreationCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("titles.command.createtitle")) {
+        if (!player.hasPermission("titles.command.create_title")) {
             player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return false;
         }
