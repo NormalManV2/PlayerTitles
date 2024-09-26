@@ -110,6 +110,8 @@ public class TitlesGUI {
         Inventory page = pages.get(pageIndex);
         if (page != null) {
             player.openInventory(page);
+        } else {
+            System.out.println("Page is null " + page);
         }
     }
 }

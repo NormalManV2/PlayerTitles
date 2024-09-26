@@ -11,7 +11,7 @@ public class ColorUtil {
 
     private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer
             .builder()
-            .character('§')
+            .character('&')
             .hexCharacter('#')
             .hexColors()
             .useUnusualXRepeatedCharacterHexFormat()
@@ -19,7 +19,10 @@ public class ColorUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     public static String convertLegacyColorCodes(String text) {
-        return ChatColor.translateAlternateColorCodes('&', LEGACY_SERIALIZER.serialize(MINI_MESSAGE.deserialize(text)));
+        if (text.contains("&") || text.contains("§")) {
+            return ChatColor.translateAlternateColorCodes('&', text);
+        }
+        return LEGACY_SERIALIZER.serialize(MINI_MESSAGE.deserialize(text));
     }
 
     public static String parsePlaceholders(Player player, String text) {

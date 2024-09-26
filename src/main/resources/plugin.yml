@@ -13,5 +13,4 @@ commands:
 
   deleteTitle:
 
-depend:
-  - [PlaceholderAPI]
+softdepend: [PlaceholderAPI]

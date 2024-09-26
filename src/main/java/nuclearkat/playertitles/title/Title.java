@@ -101,9 +101,11 @@ public class Title {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         String key = config.getString("key");
-        String displayName = config.getString("displayName");
-        String tagContents = config.getString("tagContents");
-        List<String> lore = config.getStringList("lore");
+        String displayName = ColorUtil.convertLegacyColorCodes(config.getString("displayName"));
+        String tagContents = ColorUtil.convertLegacyColorCodes(config.getString("tagContents"));
+        List<String> lore = config.getStringList("lore").stream()
+                .map(ColorUtil::convertLegacyColorCodes)
+                .toList();
         String permission = config.getString("permission");
 
         NamespacedKey titleKey = plugin.getTitleKey();

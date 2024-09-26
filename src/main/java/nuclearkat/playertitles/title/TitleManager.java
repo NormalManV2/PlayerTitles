@@ -27,7 +27,6 @@ public class TitleManager {
         Title title = new Title(key, displayName, tagContents, permission, titleKey, titleContentsKey, lore);
         this.addTitle(key, title);
         plugin.getFileManager().saveTitleToFolder(title);
-        plugin.getTitlesGUI().updateTitlesList();
     }
 
     public void addTitle(String titleKey, Title title) {
