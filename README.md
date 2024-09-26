@@ -35,5 +35,12 @@ https://github.com/user-attachments/assets/5933d25f-3259-409b-ae25-d102402a5060
 - /deletetitle |key| - Command used to delete a title.
 - /disabletitle -  Command used to disable your currently equipped title.
 
+## Permissions
+- titles.command.delete_title - The command used to delete a title.
+- titles.command.create_title - The command used to create a title.
+- title.command.save_titles - The command used to save titles held in memory to file.
+
+There are not very mnay permissions as all other commands are globally accessible to players. Only the permissions you add for each title would differ.
+
 ## Installation
 Currently, the only [download](https://www.spigotmc.org/resources/playertitles.119849/) available is on spigot.
