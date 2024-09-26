@@ -38,7 +38,9 @@ public class TitleManager {
     }
 
     public void removeTitle(String titleKey) {
-        this.titles.remove(titleKey);
+        Title title = this.titles.remove(titleKey);
+        plugin.getFileManager().removeTitleFromFolder(title);
+        plugin.getTitlesGUI().updateTitlesList();
     }
 
     public Title getTitle(String titleKey) {

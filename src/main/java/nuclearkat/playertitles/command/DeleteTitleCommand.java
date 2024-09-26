@@ -40,7 +40,8 @@ public class DeleteTitleCommand implements CommandExecutor {
             player.sendMessage("Title not found.");
             return false;
         }
-        player.sendMessage(ColorUtil.convertLegacyColorCodes("&cYou have just deleted the title: " + title.getDisplayName()));
+        player.sendMessage(ColorUtil.convertLegacyColorCodes("<red>You have just deleted the title: " + title.getDisplayName()));
+        plugin.getTextDisplayHandler().removeTextDisplays(player.getUniqueId());
         handleTitleDeletion(title);
         return true;
     }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class TitlesGUI {
 
-    private static final int TITLES_PER_PAGE = 27;
+    private static final int TITLES_PER_PAGE = 28;
     private static final int INVENTORY_SIZE = 54;
     private static final int NEXT_PAGE_SLOT = 53;
     private static final int PREVIOUS_PAGE_SLOT = 45;
@@ -110,8 +110,6 @@ public class TitlesGUI {
         Inventory page = pages.get(pageIndex);
         if (page != null) {
             player.openInventory(page);
-        } else {
-            System.out.println("Page is null " + page);
         }
     }
 }

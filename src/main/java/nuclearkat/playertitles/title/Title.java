@@ -60,7 +60,7 @@ public class Title {
     }
 
     public ItemStack build() {
-        ItemStack builtItem = new ItemStack(Material.PAPER);
+        ItemStack builtItem = new ItemStack(Material.NAME_TAG);
         ItemMeta itemMeta = builtItem.getItemMeta();
         itemMeta.setDisplayName(ColorUtil.convertLegacyColorCodes(displayName));
         List<String> formattedLore = new ArrayList<>();
@@ -77,6 +77,10 @@ public class Title {
         builtItem.setItemMeta(itemMeta);
 
         return builtItem;
+    }
+
+    public void removeFromFile(File file) throws IOException {
+        if (!file.delete()) throw new IOException("Failed to delete file: " + file.getAbsolutePath());
     }
 
     public void saveToFile(File file) throws IOException {
@@ -101,11 +105,9 @@ public class Title {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         String key = config.getString("key");
-        String displayName = ColorUtil.convertLegacyColorCodes(config.getString("displayName"));
-        String tagContents = ColorUtil.convertLegacyColorCodes(config.getString("tagContents"));
-        List<String> lore = config.getStringList("lore").stream()
-                .map(ColorUtil::convertLegacyColorCodes)
-                .toList();
+        String displayName = config.getString("displayName");
+        String tagContents = config.getString("tagContents");
+        List<String> lore = config.getStringList("lore");
         String permission = config.getString("permission");
 
         NamespacedKey titleKey = plugin.getTitleKey();

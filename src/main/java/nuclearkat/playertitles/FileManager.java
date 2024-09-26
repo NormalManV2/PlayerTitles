@@ -26,7 +26,17 @@ public class FileManager {
             }
         }
     }
-
+    
+    public void removeTitleFromFolder(Title title) {
+        File file = new File(titlesFolder, title.toString() + ".yml");
+        try {
+            title.removeFromFile(file);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to remove title from folder: " + file.getAbsolutePath());
+            e.printStackTrace();
+        }
+    }
+    
     public void saveTitleToFolder(Title title) {
         File file = new File(titlesFolder, title.getKey() + ".yml");
         try {
