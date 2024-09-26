@@ -5,7 +5,7 @@ Player titles is a niche cosmetic plugin that allows server owners/operators to 
 ## Features
 
 - PlaceholderAPI support in the cases you want placeholders in titles
-- Multi-color formatting support - Currently supports hex and generic \<color>\ formatting.
+- Multi-color formatting support - Currently supports hex and generic \<color> formatting.
 - Globally accessible GUI for enabling/disabling titles - Pagination support as well as no limit on the amount of titles you can create.
 - Seamless chat interaction system for creating titles.
 
