@@ -26,7 +26,7 @@ public class TextDisplayHandler {
     public void displayTitle(Player player, Title title) {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
-        String titleContents = ColorUtil.parsePlaceholders(player, title.getTagContents());
+        String titleContents = ColorUtil.parsePlaceholders(player, player.getDisplayName() + " " + title.getTagContents());
 
         TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class);
 

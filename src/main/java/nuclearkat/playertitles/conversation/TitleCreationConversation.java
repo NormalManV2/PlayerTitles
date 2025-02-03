@@ -37,7 +37,12 @@ public class TitleCreationConversation extends StringPrompt {
     public Prompt acceptInput(@NotNull ConversationContext context, String input) {
         List<String> lore = (List<String>) context.getSessionData("lore");
 
-        if (input.equalsIgnoreCase("done")) {
+        if (input == null) {
+            plugin.getLogger().severe("INPUT IS NULL WHEN CREATING A TITLE");
+            return null;
+        }
+
+        if (input.equalsIgnoreCase("done") || input.equalsIgnoreCase("finish")) {
             NamespacedKey titleKey = plugin.getTitleKey();
             NamespacedKey titleContentsKey = plugin.getTitleContentsKey();
 
