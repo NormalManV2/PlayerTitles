@@ -26,29 +26,30 @@ public class TextDisplayHandler {
     public void displayTitle(Player player, Title title) {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
-        String titleContents = ColorUtil.parsePlaceholders(player, player.getDisplayName() + " " + title.getTagContents());
 
-        TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class);
+        final String titleContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>" + player.getDisplayName());
 
-        Vector3f offset = new Vector3f(0, 0.15f, 0);
-        AxisAngle4f rotation = new AxisAngle4f();
-        Vector3f scale = new Vector3f(0.75f, 0.75f, 0.75f);
-        Transformation transformation = new Transformation(offset, rotation, scale, rotation);
+        TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class, display -> {
+            Vector3f offset = new Vector3f(0, 0.15f, 0);
+            AxisAngle4f rotation = new AxisAngle4f();
+            Vector3f scale = new Vector3f(0.75f, 0.75f, 0.75f);
+            Transformation transformation = new Transformation(offset, rotation, scale, rotation);
 
-        textDisplay.setText(titleContents);
-        textDisplay.setBillboard(Display.Billboard.CENTER);
-        textDisplay.setBackgroundColor(Color.fromARGB(0x80333333));
-        textDisplay.setCustomNameVisible(false);
-        textDisplay.setPersistent(false);
-        textDisplay.setSeeThrough(false);
-        textDisplay.setShadowed(false);
-        textDisplay.setInvulnerable(true);
+            display.setText(titleContents);
+            display.setBillboard(Display.Billboard.CENTER);
+            display.setBackgroundColor(Color.fromARGB(0x80333333));
+            display.setCustomNameVisible(false);
+            display.setPersistent(false);
+            display.setSeeThrough(false);
+            display.setShadowed(false);
+            display.setInvulnerable(true);
 
-        textDisplay.setTransformation(transformation);
+            display.setTransformation(transformation);
+        });
 
         this.activeTextDisplays.put(player.getUniqueId(), textDisplay);
         this.activeTitles.put(player.getUniqueId(), title);
-        player.sendMessage(ChatColor.GREEN + "You have just equipped the " + ColorUtil.convertLegacyColorCodes(title.getDisplayName()) + ChatColor.GREEN + " title!");
+        player.sendMessage(ChatColor.GREEN + "You have just equipped the " + ColorUtil.parsePlaceholders(player, title.getDisplayName()) + ChatColor.GREEN + " title!");
         player.addPassenger(textDisplay);
     }
 
