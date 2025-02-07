@@ -1,6 +1,7 @@
 package nuclearkat.playertitles.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
@@ -10,7 +11,6 @@ public class ColorUtil {
 
     private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer
             .builder()
-            .character('§')
             .hexCharacter('#')
             .hexColors()
             .useUnusualXRepeatedCharacterHexFormat()
@@ -18,7 +18,6 @@ public class ColorUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     public static String convertLegacyColorCodes(String text) {
-        text = text.replace('&', '§');
         return LEGACY_SERIALIZER.serialize(MINI_MESSAGE.deserialize(text));
     }
 

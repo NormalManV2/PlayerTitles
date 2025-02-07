@@ -27,7 +27,7 @@ public class TextDisplayHandler {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
 
-        final String titleContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>" + player.getDisplayName());
+        String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>" + player.getDisplayName());
 
         TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class, display -> {
             Vector3f offset = new Vector3f(0, 0.15f, 0);
@@ -35,7 +35,7 @@ public class TextDisplayHandler {
             Vector3f scale = new Vector3f(0.75f, 0.75f, 0.75f);
             Transformation transformation = new Transformation(offset, rotation, scale, rotation);
 
-            display.setText(titleContents);
+            display.setText(tagContents);
             display.setBillboard(Display.Billboard.CENTER);
             display.setBackgroundColor(Color.fromARGB(0x80333333));
             display.setCustomNameVisible(false);

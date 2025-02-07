@@ -2,6 +2,7 @@ package nuclearkat.playertitles.listener;
 
 import nuclearkat.playertitles.PlayerTitlesPlugin;
 import nuclearkat.playertitles.display.TextDisplayHandler;
+import nuclearkat.playertitles.title.Title;
 import nuclearkat.playertitles.util.ColorUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,9 +29,11 @@ public class PlayerChatListener implements Listener {
 
         String playerName = player.getName();
         String message = event.getMessage();
-        String titleTag = ColorUtil.convertLegacyColorCodes(handler.getActiveTitle(playerUUID).getTagContents() + " <reset>");
-        String formattedMessage = String.format("%s%s: %s", titleTag, playerName, message);
+        Title title = this.handler.getActiveTitle(playerUUID);
+        String tagContents = title.getTagContents();
 
-        event.setFormat(formattedMessage);
+        String formattedMessage = String.format("%s %s: %s", tagContents, "<reset>" + playerName, message);
+
+        event.setFormat(ColorUtil.convertLegacyColorCodes(formattedMessage));
     }
 }
