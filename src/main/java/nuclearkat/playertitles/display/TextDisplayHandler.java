@@ -27,7 +27,7 @@ public class TextDisplayHandler {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
 
-        String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>" + player.getDisplayName());
+        String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>") + player.getDisplayName();
 
         TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class, display -> {
             Vector3f offset = new Vector3f(0, 0.15f, 0);
