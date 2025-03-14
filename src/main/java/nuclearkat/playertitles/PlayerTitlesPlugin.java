@@ -14,7 +14,13 @@ import nuclearkat.playertitles.listener.TitlesGuiListener;
 import nuclearkat.playertitles.listener.WorldChangeListener;
 import nuclearkat.playertitles.title.TitleManager;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public final class PlayerTitlesPlugin extends JavaPlugin {
 
@@ -24,20 +30,39 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     private TextDisplayHandler textDisplayHandler;
     private final NamespacedKey titleContentsKey = new NamespacedKey(this, "titleContents");
     private final NamespacedKey titleKey = new NamespacedKey(this, "title");
+    private YamlConfiguration titleConfig;
+    private Path configPath;
+
 
     @Override
     public void onEnable() {
         initComponents();
-        fileManager.loadTitlesFromFolder();
+        this.fileManager.loadTitlesFromFolder();
+        saveDefaultConfig();
+        initConfig();
+        this.configPath = getDataFolder().toPath().resolve("config.yml");
         initCommands();
         initListeners();
     }
 
-    private void initComponents(){
+    private void initConfig() {
+        if (Files.notExists(this.configPath)) {
+            try {
+                Files.createDirectories(this.configPath.getParent());
+                Files.copy(getResource("config.yml"), this.configPath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                getLogger().severe("Could not create config file: " + e.getMessage());
+            }
+        }
+        this.titleConfig = YamlConfiguration.loadConfiguration(this.configPath.toFile());
+    }
+
+
+    private void initComponents() {
         this.fileManager = new FileManager(this);
         this.titleManager = new TitleManager(this);
         this.titlesGUI = new TitlesGUI(this);
-        this.textDisplayHandler = new TextDisplayHandler();
+        this.textDisplayHandler = new TextDisplayHandler(this);
     }
 
     private void initCommands() {
@@ -64,15 +89,15 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     }
 
     public TextDisplayHandler getTextDisplayHandler() {
-        if (textDisplayHandler == null){
-            textDisplayHandler = new TextDisplayHandler();
+        if (textDisplayHandler == null) {
+            textDisplayHandler = new TextDisplayHandler(this);
         }
 
         return textDisplayHandler;
     }
 
     public TitleManager getTitleManager() {
-        if (titleManager == null){
+        if (titleManager == null) {
             titleManager = new TitleManager(this);
         }
 
@@ -80,7 +105,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     }
 
     public TitlesGUI getTitlesGUI() {
-        if (titlesGUI == null){
+        if (titlesGUI == null) {
             titlesGUI = new TitlesGUI(this);
         }
 
@@ -88,7 +113,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     }
 
     public FileManager getFileManager() {
-        if (fileManager == null){
+        if (fileManager == null) {
             fileManager = new FileManager(this);
         }
 
@@ -101,6 +126,14 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
 
     public NamespacedKey getTitleContentsKey() {
         return titleContentsKey;
+    }
+
+    public YamlConfiguration getTitleConfig() {
+        return this.titleConfig;
+    }
+
+    public Path getConfigPath() {
+        return this.configPath;
     }
 
 }

@@ -1,11 +1,14 @@
 package nuclearkat.playertitles.display;
 
+import nuclearkat.playertitles.PlayerTitlesPlugin;
 import nuclearkat.playertitles.title.Title;
 import nuclearkat.playertitles.util.ColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
@@ -22,12 +25,19 @@ public class TextDisplayHandler {
 
     private final Map<UUID, TextDisplay> activeTextDisplays = new HashMap<>();
     private final Map<UUID, Title> activeTitles = new HashMap<>();
+    private final PlayerTitlesPlugin plugin;
+
+    public TextDisplayHandler(PlayerTitlesPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     public void displayTitle(Player player, Title title) {
         World world = player.getWorld();
         Location location = player.getEyeLocation();
 
         String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + " <reset>") + player.getDisplayName();
+
+
 
         TextDisplay textDisplay = world.spawn(location.clone(), TextDisplay.class, display -> {
             Vector3f offset = new Vector3f(0, 0.15f, 0);
@@ -47,10 +57,16 @@ public class TextDisplayHandler {
             display.setTransformation(transformation);
         });
 
-        this.activeTextDisplays.put(player.getUniqueId(), textDisplay);
-        this.activeTitles.put(player.getUniqueId(), title);
         player.sendMessage(ChatColor.GREEN + "You have just equipped the " + ColorUtil.parsePlaceholders(player, title.getDisplayName()) + ChatColor.GREEN + " title!");
-        player.addPassenger(textDisplay);
+        this.activeTitles.put(player.getUniqueId(), title);
+
+        if (this.plugin.getTitleConfig().getBoolean("title.display.display-above-head")) {
+            this.activeTextDisplays.put(player.getUniqueId(), textDisplay);
+            player.addPassenger(textDisplay);
+            return;
+        }
+
+        textDisplay.remove();
     }
 
     public void removeTextDisplays(UUID playerId) {
