@@ -66,7 +66,7 @@ public class TitlesGuiListener implements Listener {
                 player.sendMessage(ChatColor.DARK_RED + "Title not found: THIS IS AN ERROR, PLEASE REPORT! <TitlesListener> ");
                 return;
             }
-            handleTitleSelection(player, title);
+            this.handleTitleSelection(player, title);
         }
     }
 

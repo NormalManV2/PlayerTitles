@@ -69,11 +69,11 @@ public class TextDisplayHandler {
 
     public void removeTextDisplays(UUID playerId) {
         TextDisplay textDisplay = this.activeTextDisplays.remove(playerId);
+        this.activeTitles.remove(playerId);
         if (textDisplay == null){
             return;
         }
         textDisplay.remove();
-        this.activeTitles.remove(playerId);
     }
 
     public Map<UUID, TextDisplay> getActiveTextDisplays() {
@@ -116,10 +116,4 @@ public class TextDisplayHandler {
         }
         this.activeTextDisplays.clear();
     }
-
-    public void reload() {
-        this.clearDisplayEntries();
-        this.clearTitleEntries();
-    }
-
 }

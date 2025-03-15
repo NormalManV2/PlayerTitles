@@ -12,11 +12,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.UUID;
 
 public class PlayerChatListener implements Listener {
-    private final TextDisplayHandler handler;
     private final PlayerTitlesPlugin plugin;
 
     public PlayerChatListener(PlayerTitlesPlugin plugin) {
-        this.handler = plugin.getTextDisplayHandler();
         this.plugin = plugin;
     }
 
@@ -30,13 +28,13 @@ public class PlayerChatListener implements Listener {
         Player player = event.getPlayer();
         UUID playerUUID = player.getUniqueId();
 
-        if (!handler.hasActiveDisplay(playerUUID)) {
+        if (!plugin.getTextDisplayHandler().hasActiveTitle(playerUUID)) {
             return;
         }
 
         String playerName = player.getName();
         String message = event.getMessage();
-        Title title = this.handler.getActiveTitle(playerUUID);
+        Title title = this.plugin.getTextDisplayHandler().getActiveTitle(playerUUID);
         String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + "<reset> ");
 
         String formattedMessage = String.format("%s%s: %s", tagContents, playerName, message);

@@ -1,6 +1,7 @@
 package nuclearkat.playertitles.command;
 
 import nuclearkat.playertitles.PlayerTitlesPlugin;
+import nuclearkat.playertitles.util.ColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,6 +29,7 @@ public class ReloadCommand implements CommandExecutor {
             return true;
         }
 
+        player.sendMessage(ColorUtil.convertLegacyColorCodes("<red>PlayerTitles has been reloaded!"));
         this.plugin.reload();
 
         return true;

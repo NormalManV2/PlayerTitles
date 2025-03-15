@@ -52,7 +52,6 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
         this.titleConfig = YamlConfiguration.loadConfiguration(this.configPath.toFile());
     }
 
-
     private void initComponents() {
         this.fileManager = new FileManager(this);
         this.titleManager = new TitleManager(this);
@@ -134,7 +133,18 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
 
     public void reload() {
         this.onDisable();
-        this.onEnable();
+        this.initConfig();
+        this.reloadComponents();
+        this.fileManager.loadTitlesFromFolder();
+    }
+
+    private void reloadComponents() {
+        this.fileManager = null;
+        this.titleManager = null;
+        this.titlesGUI = null;
+        this.textDisplayHandler = null;
+
+        this.initComponents();
     }
 
 }
