@@ -1,10 +1,6 @@
 package nuclearkat.playertitles;
 
-import nuclearkat.playertitles.command.DeleteTitleCommand;
-import nuclearkat.playertitles.command.DisableTitleCommand;
-import nuclearkat.playertitles.command.OpenTitlesGuiCommand;
-import nuclearkat.playertitles.command.SaveTitlesCommand;
-import nuclearkat.playertitles.command.TitleCreationCommand;
+import nuclearkat.playertitles.command.*;
 import nuclearkat.playertitles.display.TextDisplayHandler;
 import nuclearkat.playertitles.gui.TitlesGUI;
 import nuclearkat.playertitles.listener.PlayerChatListener;
@@ -31,7 +27,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
     private final NamespacedKey titleContentsKey = new NamespacedKey(this, "titleContents");
     private final NamespacedKey titleKey = new NamespacedKey(this, "title");
     private YamlConfiguration titleConfig;
-    private Path configPath;
+    private final Path configPath = getDataFolder().toPath().resolve("config.yml");
 
 
     @Override
@@ -40,7 +36,6 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
         this.fileManager.loadTitlesFromFolder();
         saveDefaultConfig();
         initConfig();
-        this.configPath = getDataFolder().toPath().resolve("config.yml");
         initCommands();
         initListeners();
     }
@@ -71,6 +66,7 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
         getCommand("disabletitle").setExecutor(new DisableTitleCommand(this));
         getCommand("savetitles").setExecutor(new SaveTitlesCommand(this));
         getCommand("deleteTitle").setExecutor(new DeleteTitleCommand(this));
+        getCommand("reloadTitles").setExecutor(new ReloadCommand(this));
     }
 
     private void initListeners() {
@@ -134,6 +130,11 @@ public final class PlayerTitlesPlugin extends JavaPlugin {
 
     public Path getConfigPath() {
         return this.configPath;
+    }
+
+    public void reload() {
+        this.onDisable();
+        this.onEnable();
     }
 
 }

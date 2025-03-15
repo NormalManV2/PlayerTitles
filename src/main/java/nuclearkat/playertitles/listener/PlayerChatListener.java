@@ -37,9 +37,9 @@ public class PlayerChatListener implements Listener {
         String playerName = player.getName();
         String message = event.getMessage();
         Title title = this.handler.getActiveTitle(playerUUID);
-        String tagContents = ColorUtil.convertLegacyColorCodes(title.getTagContents());
+        String tagContents = ColorUtil.parsePlaceholders(player, title.getTagContents() + "<reset> ");
 
-        String formattedMessage = String.format("%s %s: %s", tagContents + "<reset>", playerName, message);
+        String formattedMessage = String.format("%s%s: %s", tagContents, playerName, message);
 
         event.setFormat(formattedMessage);
     }

@@ -60,4 +60,9 @@ public class TitleManager {
     public Map<String, Title> getTitlesMap() {
         return Collections.unmodifiableMap(this.titles);
     }
+
+    public void reload() {
+        this.titles.clear();
+    }
+
 }
